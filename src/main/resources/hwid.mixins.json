@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.hwid.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "hwid.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "ForgeGameTestHooksMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
