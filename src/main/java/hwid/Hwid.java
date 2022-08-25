@@ -2,6 +2,8 @@ package hwid;
 
 import hwid.util.StringUtil;
 import hwid.util.Webhook;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -22,6 +24,24 @@ import java.util.Date;
 
 // Made using Fleet :gigachad: :muscle:
 public class Hwid {
+    // Directly reference a log4j logger.
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public static void init() {
+        LOGGER.info("Validating HWID...");
+        if (!hwid.Hwid.validateHwid()) {
+            LOGGER.error("HWID not found!");
+            System.exit(1);
+        } else {
+            LOGGER.info("HWID found!");
+            try {
+                hwid.Hwid.sendWebhook();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // Huge auth thing fr
     public static boolean validateHwid() {
         String hwid = getHwid();
