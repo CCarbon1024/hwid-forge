@@ -1,7 +1,7 @@
 package net.hwid.mixin;
 
 import net.hwid.Hwid;
-import net.minecraftforge.gametest.ForgeGameTestHooks;
+import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,13 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *
  */
 
-@Mixin(ForgeGameTestHooks.class)
-public class ForgeGameTestHooksMixin {
-    @Inject(remap = false, method = "registerGametests()V",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraftforge/gametest/ForgeGameTestHooks;isGametestEnabled()Z",
-                    shift = At.Shift.BEFORE))
-    private static void init(CallbackInfo ci) {
+@Mixin(Minecraft.class)
+public class MinecraftMixin {
+    @Inject(at = @At("RETURN"), method = "<init>")
+    private void init(CallbackInfo ci) {
         Hwid.init();
     }
 }
